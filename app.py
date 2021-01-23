@@ -151,7 +151,7 @@ def posts_update(post_id):
     post.content = request.form['content']
 
     tag_ids = [int(num) for num in request.form.getlist("tags")]
-    post.tags = Tag.query.filter(Tag.id.in(tag_ids)).all()
+    post.tags = Tag.query.filter(Tag.id.in_(tag_ids)).all()
 
     db.session.add(post)
     db.session.commit()
@@ -216,7 +216,7 @@ def tags_edit_form(tag_id):
     posts = Post.query.all()
     return render_template('tags/edit.html', tag=tag, posts=posts)
 
-@app.route('/tags/<int:tag_id>/edit', method=["POST"])
+@app.route('/tags/<int:tag_id>/edit', methods=["POST"])
 def tags_edit(tag_id):
     """Handle updating existing tag information"""
 
